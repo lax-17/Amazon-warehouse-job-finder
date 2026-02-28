@@ -1,19 +1,21 @@
 """Job change detection for Amazon Jobs Monitor v2."""
 
 from datetime import datetime
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 
 from .models import Job, JobChanges, JobHistory, ChangeType
 from .database import Database
+from .notifier import TelegramNotifier
 
 
 class ChangeDetector:
     """Detect changes between fetched jobs and stored jobs."""
     
-    def __init__(self, database: Database):
+    def __init__(self, database: Database, notifier: Optional[TelegramNotifier] = None):
         self.db = database
+        self.notifier = notifier or TelegramNotifier()  # Auto-loads from env vars
     
-    def detect_changes(self, fetched_jobs: List[Job]) -> JobChanges:
+    async def detect_changes(self, fetched_jobs: List[Job]) -> JobChanges:
         """
         Detect changes between fetched jobs and stored jobs.
         
@@ -43,6 +45,10 @@ class ChangeDetector:
                     new_values=fetched_job.to_db_dict()
                 )
                 self.db.add_history(history)
+                
+                # Send Telegram notification for new job
+                if self.notifier.enabled:
+                    await self.notifier.send_job_notification(fetched_job)
             else:
                 # Existing job - check for updates
                 stored_job = stored_active[job_id]

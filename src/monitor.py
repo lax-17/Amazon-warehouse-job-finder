@@ -111,8 +111,8 @@ class JobMonitor:
                         session, lat, lng, radius, paginate=False
                     )
                     
-                    # Detect and record changes
-                    changes = self.change_detector.detect_changes(result.jobs)
+                    # Detect and record changes (now async for Telegram notifications)
+                    changes = await self.change_detector.detect_changes(result.jobs)
                     
                     # Log status
                     await self._log_status(result, changes, location, radius)
