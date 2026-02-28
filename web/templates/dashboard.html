@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Amazon Jobs Monitor v2{% endblock %}
+
+{% block content %}
+<h2 style="margin-bottom: 20px;">Dashboard</h2>
+
+<div class="stats-grid">
+    <div class="stat-card">
+        <h3>Total Active Jobs</h3>
+        <div class="value">{{ stats.total_jobs }}</div>
+    </div>
+    <div class="stat-card">
+        <h3>Part-Time Jobs</h3>
+        <div class="value">{{ stats.part_time }}</div>
+    </div>
+    <div class="stat-card">
+        <h3>Full-Time Jobs</h3>
+        <div class="value">{{ stats.full_time }}</div>
+    </div>
+    <div class="stat-card">
+        <h3>Flexible Jobs</h3>
+        <div class="value">{{ stats.flexible }}</div>
+    </div>
+    <div class="stat-card">
+        <h3>Under 20h Jobs</h3>
+        <div class="value">{{ stats.under_20h }}</div>
+    </div>
+    <div class="stat-card">
+        <h3>With Hours Info</h3>
+        <div class="value">{{ stats.with_hours }}</div>
+    </div>
+    <div class="stat-card">
+        <h3>History Entries</h3>
+        <div class="value">{{ stats.history_entries }}</div>
+    </div>
+</div>
+
+<div class="content-section">
+    <h3 style="margin-bottom: 15px;">Quick Links</h3>
+    <p>
+        <a href="/jobs?type=part-time" style="margin-right: 15px;">View Part-Time Jobs</a>
+        <a href="/jobs?type=flexible" style="margin-right: 15px;">View Flexible Jobs</a>
+        <a href="/jobs?type=under-20h" style="margin-right: 15px;">View Under 20h Jobs</a>
+        <a href="/history">View History</a>
+    </p>
+</div>
+{% endblock %}

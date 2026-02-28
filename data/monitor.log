@@ -1,0 +1,131 @@
+2026-02-28 11:39:18,042 - INFO - Token loaded successfully
+2026-02-28 11:39:18,043 - INFO - Starting monitor for Leeds, UK within 50.0 miles
+2026-02-28 11:39:18,206 - INFO - Geocoded Leeds, UK to 53.7946378, -1.5322079
+2026-02-28 11:39:18,357 - INFO - Updated jobs: 1
+2026-02-28 11:39:30,304 - INFO - Shutdown signal received
+2026-02-28 11:39:45,080 - INFO - Shutdown signal received
+2026-02-28 11:50:15,214 - INFO - Token loaded successfully
+2026-02-28 11:50:15,215 - INFO - Starting monitor for Leeds, UK within 50.0 miles
+2026-02-28 11:50:15,365 - INFO - Geocoded Leeds, UK to 53.7946378, -1.5322079
+2026-02-28 11:50:24,149 - INFO - Shutdown signal received
+2026-02-28 11:51:34,458 - INFO - Token loaded successfully
+2026-02-28 11:51:34,459 - INFO - Starting monitor for Leeds, UK within 50.0 miles
+2026-02-28 11:51:34,640 - INFO - Geocoded Leeds, UK to 53.7946378, -1.5322079
+2026-02-28 11:55:36,172 - INFO - Token loaded successfully
+2026-02-28 11:55:36,172 - INFO - Starting monitor for Leeds, UK within 50.0 miles
+2026-02-28 11:55:36,329 - INFO - Geocoded Leeds, UK to 53.7946378, -1.5322079
+2026-02-28 11:55:38,228 - INFO - Shutdown signal received
+2026-02-28 11:56:06,331 - INFO - Monitor stopped after 1 cycles
+2026-02-28 12:00:49,640 - INFO - Token loaded successfully
+2026-02-28 12:00:49,645 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2026-02-28 12:00:49,645 - INFO - [33mPress CTRL+C to quit[0m
+2026-02-28 12:02:07,471 - INFO - Token loaded successfully
+2026-02-28 12:02:07,471 - INFO - Running in background thread (signal handling disabled)
+2026-02-28 12:02:07,471 - INFO - Starting monitor for Leeds, UK within 50.0 miles
+2026-02-28 12:02:07,477 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2026-02-28 12:02:07,477 - INFO - [33mPress CTRL+C to quit[0m
+2026-02-28 12:02:07,631 - INFO - Geocoded Leeds, UK to 53.7946378, -1.5322079
+2026-02-28 12:02:29,597 - INFO - Token loaded successfully
+2026-02-28 12:02:29,598 - INFO - Running in background thread (signal handling disabled)
+2026-02-28 12:02:29,598 - INFO - Starting monitor for Leeds, UK within 50.0 miles
+2026-02-28 12:02:29,604 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2026-02-28 12:02:29,604 - INFO - [33mPress CTRL+C to quit[0m
+2026-02-28 12:02:29,753 - INFO - Geocoded Leeds, UK to 53.7946378, -1.5322079
+2026-02-28 12:07:57,343 - INFO - Token loaded successfully
+2026-02-28 12:07:57,343 - INFO - Running in background thread (signal handling disabled)
+2026-02-28 12:07:57,343 - INFO - Starting monitor for Leeds, UK within 50.0 miles
+2026-02-28 12:07:57,503 - INFO - Geocoded Leeds, UK to 53.7946378, -1.5322079
+2026-02-28 12:07:58,362 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2026-02-28 12:07:58,362 - INFO - [33mPress CTRL+C to quit[0m
+2026-02-28 12:08:02,060 - INFO - 127.0.0.1 - - [28/Feb/2026 12:08:02] "GET / HTTP/1.1" 200 -
+2026-02-28 12:08:14,826 - INFO - 127.0.0.1 - - [28/Feb/2026 12:08:14] "GET /history HTTP/1.1" 200 -
+2026-02-28 12:08:19,576 - INFO - 127.0.0.1 - - [28/Feb/2026 12:08:19] "GET / HTTP/1.1" 200 -
+2026-02-28 12:08:24,078 - INFO - 127.0.0.1 - - [28/Feb/2026 12:08:24] "GET /history HTTP/1.1" 200 -
+2026-02-28 12:13:23,597 - INFO - Token loaded successfully
+2026-02-28 12:13:23,597 - INFO - Running in background thread (signal handling disabled)
+2026-02-28 12:13:23,597 - INFO - Starting monitor for Leeds, UK within 50.0 miles
+2026-02-28 12:13:23,748 - INFO - Geocoded Leeds, UK to 53.7946378, -1.5322079
+2026-02-28 12:13:24,614 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2026-02-28 12:13:24,614 - INFO - [33mPress CTRL+C to quit[0m
+2026-02-28 12:13:27,673 - INFO - 127.0.0.1 - - [28/Feb/2026 12:13:27] "GET /history HTTP/1.1" 200 -
+2026-02-28 12:13:34,190 - INFO - 127.0.0.1 - - [28/Feb/2026 12:13:34] "GET / HTTP/1.1" 200 -
+2026-02-28 12:13:37,085 - INFO - 127.0.0.1 - - [28/Feb/2026 12:13:37] "GET /history HTTP/1.1" 200 -
+2026-02-28 12:18:57,675 - INFO - 127.0.0.1 - - [28/Feb/2026 12:18:57] "GET / HTTP/1.1" 200 -
+2026-02-28 12:19:00,056 - INFO - 127.0.0.1 - - [28/Feb/2026 12:19:00] "GET /history HTTP/1.1" 200 -
+2026-02-28 12:21:55,012 - ERROR - Error in cycle 18: no such table: jobs
+2026-02-28 12:22:25,110 - ERROR - Error in cycle 19: no such table: jobs
+2026-02-28 12:22:55,152 - ERROR - Error in cycle 20: no such table: jobs
+2026-02-28 12:23:25,208 - ERROR - Error in cycle 21: no such table: jobs
+2026-02-28 12:23:55,326 - ERROR - Error in cycle 22: no such table: jobs
+2026-02-28 12:24:18,565 - ERROR - Exception on /history [GET]
+Traceback (most recent call last):
+  File "/opt/anaconda3/lib/python3.13/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/opt/anaconda3/lib/python3.13/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/opt/anaconda3/lib/python3.13/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/opt/anaconda3/lib/python3.13/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/laxmikantnishad/Downloads/amazon-jobs-master/amazon_jobs_monitor_v2/web/app.py", line 126, in history_page
+    history = db.get_recent_history(limit=100)
+  File "/Users/laxmikantnishad/Downloads/amazon-jobs-master/amazon_jobs_monitor_v2/src/database.py", line 199, in get_recent_history
+    with sqlite3.connect(self.db_path) as conn:
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+            "SELECT * FROM job_history ORDER BY timestamp DESC LIMIT ?",
+    
+sqlite3.OperationalError: no such table: job_history
+2026-02-28 12:24:18,570 - INFO - 127.0.0.1 - - [28/Feb/2026 12:24:18] "[35m[1mGET /history HTTP/1.1[0m" 500 -
+2026-02-28 12:24:22,117 - ERROR - Exception on / [GET]
+Traceback (most recent call last):
+  File "/opt/anaconda3/lib/python3.13/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/opt/anaconda3/lib/python3.13/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/opt/anaconda3/lib/python3.13/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/opt/anaconda3/lib/python3.13/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/laxmikantnishad/Downloads/amazon-jobs-master/amazon_jobs_monitor_v2/web/app.py", line 59, in dashboard
+    stats = db.get_stats()
+  File "/Users/laxmikantnishad/Downloads/amazon-jobs-master/amazon_jobs_monitor_v2/src/database.py", line 221, in get_stats
+    """Get database statistics."""
+                     ^^^^^^^^^^^^^
+    with sqlite3.connect(self.db_path) as conn:
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        total_jobs = conn.execute(
+        ^
+sqlite3.OperationalError: no such table: jobs
+2026-02-28 12:24:22,119 - INFO - 127.0.0.1 - - [28/Feb/2026 12:24:22] "[35m[1mGET / HTTP/1.1[0m" 500 -
+2026-02-28 12:24:25,380 - ERROR - Error in cycle 23: no such table: jobs
+2026-02-28 12:24:55,429 - ERROR - Error in cycle 24: no such table: jobs
+2026-02-28 12:25:16,256 - INFO - 127.0.0.1 - - [28/Feb/2026 12:25:16] "GET / HTTP/1.1" 200 -
+2026-02-28 12:25:18,404 - INFO - 127.0.0.1 - - [28/Feb/2026 12:25:18] "GET /history HTTP/1.1" 200 -
+2026-02-28 12:25:24,031 - INFO - 127.0.0.1 - - [28/Feb/2026 12:25:24] "GET /history HTTP/1.1" 200 -
+2026-02-28 12:25:25,715 - INFO - 127.0.0.1 - - [28/Feb/2026 12:25:25] "GET / HTTP/1.1" 200 -
+2026-02-28 12:25:27,789 - INFO - 127.0.0.1 - - [28/Feb/2026 12:25:27] "GET /history HTTP/1.1" 200 -
+2026-02-28 12:26:06,163 - INFO - Token loaded successfully
+2026-02-28 12:26:06,163 - INFO - Running in background thread (signal handling disabled)
+2026-02-28 12:26:06,163 - INFO - Starting monitor for Leeds, UK within 50.0 miles
+2026-02-28 12:26:06,334 - INFO - Geocoded Leeds, UK to 53.7946378, -1.5322079
+2026-02-28 12:26:07,182 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2026-02-28 12:26:07,183 - INFO - [33mPress CTRL+C to quit[0m
+2026-02-28 12:26:25,582 - INFO - 127.0.0.1 - - [28/Feb/2026 12:26:25] "GET /history HTTP/1.1" 200 -
+2026-02-28 12:31:10,753 - INFO - 127.0.0.1 - - [28/Feb/2026 12:31:10] "GET /history HTTP/1.1" 200 -
+2026-02-28 12:31:26,199 - INFO - 127.0.0.1 - - [28/Feb/2026 12:31:26] "GET / HTTP/1.1" 200 -
+2026-02-28 12:31:29,125 - INFO - 127.0.0.1 - - [28/Feb/2026 12:31:29] "GET /history HTTP/1.1" 200 -
+2026-02-28 12:34:45,541 - INFO - 127.0.0.1 - - [28/Feb/2026 12:34:45] "GET / HTTP/1.1" 200 -
+2026-02-28 12:35:22,324 - INFO - 127.0.0.1 - - [28/Feb/2026 12:35:22] "GET / HTTP/1.1" 200 -
+2026-02-28 12:35:25,852 - INFO - 127.0.0.1 - - [28/Feb/2026 12:35:25] "GET /history HTTP/1.1" 200 -
+2026-02-28 12:35:44,640 - INFO - 127.0.0.1 - - [28/Feb/2026 12:35:44] "GET / HTTP/1.1" 200 -
+2026-02-28 12:35:48,324 - INFO - 127.0.0.1 - - [28/Feb/2026 12:35:48] "GET /history HTTP/1.1" 200 -
+2026-02-28 12:37:27,336 - INFO - 127.0.0.1 - - [28/Feb/2026 12:37:27] "GET /history HTTP/1.1" 200 -

@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }} - Amazon Jobs Monitor v2{% endblock %}
+
+{% block content %}
+<h2 style="margin-bottom: 20px;">{{ title }} ({{ jobs|length }})</h2>
+
+<div class="content-section">
+    <table>
+        <thead>
+            <tr>
+                <th>Job Title</th>
+                <th>Location</th>
+                <th>Hours/Week</th>
+                <th>Type</th>
+                <th>Distance</th>
+                <th>Flags</th>
+                <th>First Seen</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for job in jobs %}
+            <tr>
+                <td>{{ job.job_title }}</td>
+                <td>{{ job.location_name }}</td>
+                <td>
+                    {% if job.hours_per_week %}
+                    {{ job.hours_per_week }} hrs
+                    {% else %}
+                    -
+                    {% endif %}
+                </td>
+                <td>
+                    {% if job.is_part_time %}
+                    <span class="badge badge-part-time">Part-Time</span>
+                    {% elif job.is_full_time %}
+                    <span class="badge badge-full-time">Full-Time</span>
+                    {% endif %}
+                </td>
+                <td>{{ "%.1f"|format(job.distance) }} mi</td>
+                <td>
+                    {% if job.is_flexible %}
+                    <span class="badge badge-flexible">Flexible</span>
+                    {% endif %}
+                    {% if job.is_under_20h %}
+                    <span class="badge badge-under-20">Under 20h</span>
+                    {% endif %}
+                </td>
+                <td>{{ job.first_seen.strftime('%d/%m/%Y %H:%M') if job.first_seen else 'Unknown' }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    {% if not jobs %}
+    <p style="text-align: center; padding: 40px; color: #666;">No jobs found.</p>
+    {% endif %}
+</div>
+{% endblock %}

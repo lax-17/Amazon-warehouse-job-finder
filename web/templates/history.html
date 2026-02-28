@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}History - Amazon Jobs Monitor v2{% endblock %}
+
+{% block content %}
+<h2 style="margin-bottom: 20px;">Job History</h2>
+
+<div class="content-section">
+    <table>
+        <thead>
+            <tr>
+                <th>Time</th>
+                <th>Job Title</th>
+                <th>Location</th>
+                <th>Change Type</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in history_with_jobs %}
+            {% set entry = item.entry %}
+            {% set job = item.job %}
+            <tr>
+                <td>{{ entry.timestamp.strftime('%d/%m/%Y %H:%M:%S') if entry.timestamp else 'Unknown' }}</td>
+                <td>{{ job.job_title if job else 'Unknown' }}</td>
+                <td>{{ job.location_name or job.city if job else 'Unknown' }}</td>
+                <td>
+                    {% if entry.change_type.value == 'new' %}
+                    <span style="color: #28a745; font-weight: 500;">NEW</span>
+                    {% elif entry.change_type.value == 'updated' %}
+                    <span style="color: #ffc107; font-weight: 500;">UPDATED</span>
+                    {% elif entry.change_type.value == 'removed' %}
+                    <span style="color: #dc3545; font-weight: 500;">REMOVED</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    {% if not history_with_jobs %}
+    <p style="text-align: center; padding: 40px; color: #666;">No history entries yet.</p>
+    {% endif %}
+</div>
+{% endblock %}
