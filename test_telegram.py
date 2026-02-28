@@ -5,12 +5,16 @@ import asyncio
 import sys
 sys.path.insert(0, '.')
 
+from src.config import Config
 from src.notifier import TelegramNotifier
 from src.models import Job
 from datetime import datetime
 
 async def send_dummy_alert():
     """Send a dummy job alert to test Telegram notifications."""
+    
+    # Load config (this loads config.env into environment)
+    config = Config()
     
     # Create dummy job
     dummy_job = Job(
@@ -31,7 +35,7 @@ async def send_dummy_alert():
         last_updated=datetime.utcnow()
     )
     
-    # Initialize notifier (reads from config.env)
+    # Initialize notifier (reads from config.env via environment)
     notifier = TelegramNotifier()
     
     if not notifier.enabled:
