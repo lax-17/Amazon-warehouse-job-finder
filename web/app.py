@@ -122,16 +122,82 @@ def create_app(config: Config = None, start_monitor: bool = True):
     
     @app.route('/history')
     def history_page():
-        """History page."""
-        history = db.get_recent_history(limit=100)
-        # Get job details for each history entry
+        """History page with filtering."""
+        # Get filter parameters
+        search = request.args.get('search', '').lower()
+        change_type = request.args.get('change_type', '')
+        job_type = request.args.get('job_type', '')
+        date_from = request.args.get('date_from', '')
+        date_to = request.args.get('date_to', '')
+        
+        # Get all history (increased limit for filtering)
+        history = db.get_recent_history(limit=500)
+        
+        # Get job details and apply filters
         history_with_jobs = []
         for entry in history:
             job = db.get_job(entry.job_id)
+            
+            # Apply change type filter
+            if change_type and entry.change_type.value != change_type:
+                continue
+            
+            # Apply date range filters
+            if date_from and entry.timestamp:
+                from_date = datetime.strptime(date_from, '%Y-%m-%d')
+                if entry.timestamp.date() < from_date.date():
+                    continue
+            
+            if date_to and entry.timestamp:
+                to_date = datetime.strptime(date_to, '%Y-%m-%d')
+                if entry.timestamp.date() > to_date.date():
+                    continue
+            
+            # Apply job type filter
+            if job_type and job:
+                if job_type == 'part' and 'part' not in job.job_type.lower():
+                    continue
+                if job_type == 'full' and 'full' not in job.job_type.lower():
+                    continue
+                if job_type == 'flexible' and not job.is_flexible:
+                    continue
+                if job_type == 'under20' and not job.is_under_20h:
+                    continue
+            
+            # Apply search filter
+            if search:
+                match = False
+                search_fields = []
+                
+                # Add job fields to search
+                if job:
+                    search_fields.extend([
+                        job.job_title or '',
+                        job.location_name or '',
+                        job.city or '',
+                        job.state or '',
+                        job.employment_type or '',
+                        job.job_type or ''
+                    ])
+                
+                # Add entry fields
+                search_fields.append(entry.job_id)
+                search_fields.append(entry.change_type.value)
+                
+                # Check if any field matches
+                for field in search_fields:
+                    if search in field.lower():
+                        match = True
+                        break
+                
+                if not match:
+                    continue
+            
             history_with_jobs.append({
                 'entry': entry,
                 'job': job
             })
+        
         return render_template('history.html', history_with_jobs=history_with_jobs)
     
     return app

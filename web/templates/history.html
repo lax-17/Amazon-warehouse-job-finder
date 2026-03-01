@@ -3,16 +3,338 @@
 {% block title %}History - Amazon Jobs Monitor v2{% endblock %}
 
 {% block content %}
-<h2 style="margin-bottom: 20px;">Job History</h2>
+<style>
+    .filter-section {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        border: 1px solid #e9ecef;
+    }
+    
+    .filter-row {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+        align-items: end;
+    }
+    
+    .filter-group {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .filter-group label {
+        font-size: 12px;
+        font-weight: 600;
+        color: #666;
+        text-transform: uppercase;
+    }
+    
+    .filter-group input,
+    .filter-group select {
+        padding: 8px 12px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 14px;
+        min-width: 150px;
+    }
+    
+    .filter-group input:focus,
+    .filter-group select:focus {
+        outline: none;
+        border-color: #ff9900;
+    }
+    
+    .search-box {
+        flex: 1;
+        min-width: 250px;
+    }
+    
+    .search-box input {
+        width: 100%;
+        padding: 10px 15px;
+        border: 2px solid #ddd;
+        border-radius: 4px;
+        font-size: 14px;
+    }
+    
+    .search-box input:focus {
+        outline: none;
+        border-color: #ff9900;
+    }
+    
+    .btn {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 500;
+        transition: all 0.2s;
+    }
+    
+    .btn-primary {
+        background: #ff9900;
+        color: white;
+    }
+    
+    .btn-primary:hover {
+        background: #e88a00;
+    }
+    
+    .btn-secondary {
+        background: #6c757d;
+        color: white;
+    }
+    
+    .btn-secondary:hover {
+        background: #5a6268;
+    }
+    
+    .btn-export {
+        background: #28a745;
+        color: white;
+    }
+    
+    .btn-export:hover {
+        background: #218838;
+    }
+    
+    .stats-bar {
+        display: flex;
+        gap: 20px;
+        margin-bottom: 15px;
+        padding: 10px 15px;
+        background: #e9ecef;
+        border-radius: 4px;
+        font-size: 14px;
+    }
+    
+    .stats-bar span {
+        font-weight: 600;
+    }
+    
+    .data-table-container {
+        overflow-x: auto;
+        border-radius: 8px;
+        border: 1px solid #e9ecef;
+    }
+    
+    .data-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13px;
+    }
+    
+    .data-table thead {
+        background: #343a40;
+        color: white;
+        position: sticky;
+        top: 0;
+    }
+    
+    .data-table th {
+        padding: 12px 10px;
+        text-align: left;
+        font-weight: 600;
+        cursor: pointer;
+        user-select: none;
+        white-space: nowrap;
+    }
+    
+    .data-table th:hover {
+        background: #495057;
+    }
+    
+    .data-table th .sort-icon {
+        margin-left: 5px;
+        opacity: 0.5;
+    }
+    
+    .data-table th.sort-asc .sort-icon::after {
+        content: '▲';
+        opacity: 1;
+    }
+    
+    .data-table th.sort-desc .sort-icon::after {
+        content: '▼';
+        opacity: 1;
+    }
+    
+    .data-table td {
+        padding: 10px;
+        border-bottom: 1px solid #e9ecef;
+    }
+    
+    .data-table tbody tr:hover {
+        background: #f8f9fa;
+    }
+    
+    .data-table tbody tr:nth-child(even) {
+        background: #fafafa;
+    }
+    
+    .badge {
+        padding: 4px 8px;
+        border-radius: 3px;
+        font-size: 11px;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+    
+    .badge-new {
+        background: #d4edda;
+        color: #155724;
+    }
+    
+    .badge-updated {
+        background: #fff3cd;
+        color: #856404;
+    }
+    
+    .badge-removed {
+        background: #f8d7da;
+        color: #721c24;
+    }
+    
+    .job-title {
+        font-weight: 500;
+        color: #232f3e;
+        max-width: 300px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    
+    .location-info {
+        color: #666;
+        font-size: 12px;
+    }
+    
+    .hours-badge {
+        background: #e3f2fd;
+        color: #1976d2;
+        padding: 2px 6px;
+        border-radius: 3px;
+        font-size: 11px;
+        font-weight: 600;
+    }
+    
+    .no-results {
+        text-align: center;
+        padding: 60px 20px;
+        color: #666;
+    }
+    
+    .no-results h3 {
+        margin-bottom: 10px;
+        color: #999;
+    }
+    
+    .pagination {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 20px;
+        padding: 15px;
+    }
+    
+    .pagination button {
+        padding: 8px 15px;
+        border: 1px solid #ddd;
+        background: white;
+        cursor: pointer;
+        border-radius: 4px;
+    }
+    
+    .pagination button:hover:not(:disabled) {
+        background: #f8f9fa;
+    }
+    
+    .pagination button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+    
+    .pagination .page-info {
+        padding: 8px 15px;
+        color: #666;
+    }
+</style>
 
-<div class="content-section">
-    <table>
+<h2 style="margin-bottom: 20px;">📊 Job History</h2>
+
+<!-- Filters Section -->
+<div class="filter-section">
+    <form id="filter-form" method="GET" action="/history">
+        <div class="filter-row">
+            <div class="filter-group search-box">
+                <label for="search">Search</label>
+                <input type="text" id="search" name="search" placeholder="Search job title, location, city..." value="{{ request.args.get('search', '') }}">
+            </div>
+            
+            <div class="filter-group">
+                <label for="change_type">Change Type</label>
+                <select id="change_type" name="change_type">
+                    <option value="">All Types</option>
+                    <option value="new" {% if request.args.get('change_type') == 'new' %}selected{% endif %}>New</option>
+                    <option value="updated" {% if request.args.get('change_type') == 'updated' %}selected{% endif %}>Updated</option>
+                    <option value="removed" {% if request.args.get('change_type') == 'removed' %}selected{% endif %}>Removed</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <label for="job_type">Job Type</label>
+                <select id="job_type" name="job_type">
+                    <option value="">All Jobs</option>
+                    <option value="part" {% if request.args.get('job_type') == 'part' %}selected{% endif %}>Part-Time</option>
+                    <option value="full" {% if request.args.get('job_type') == 'full' %}selected{% endif %}>Full-Time</option>
+                    <option value="flexible" {% if request.args.get('job_type') == 'flexible' %}selected{% endif %}>Flexible</option>
+                    <option value="under20" {% if request.args.get('job_type') == 'under20' %}selected{% endif %}>Under 20h</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <label for="date_from">From Date</label>
+                <input type="date" id="date_from" name="date_from" value="{{ request.args.get('date_from', '') }}">
+            </div>
+            
+            <div class="filter-group">
+                <label for="date_to">To Date</label>
+                <input type="date" id="date_to" name="date_to" value="{{ request.args.get('date_to', '') }}">
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Apply Filters</button>
+            <a href="/history" class="btn btn-secondary">Clear</a>
+            <button type="button" class="btn btn-export" onclick="exportToCSV()">📥 Export CSV</button>
+        </div>
+    </form>
+</div>
+
+<!-- Stats Bar -->
+<div class="stats-bar">
+    <span>📋 Total: {{ history_with_jobs|length }} entries</span>
+    <span style="color: #28a745;">🆕 New: {{ history_with_jobs|selectattr('entry.change_type.value', 'equalto', 'new')|list|length }}</span>
+    <span style="color: #ffc107;">🔄 Updated: {{ history_with_jobs|selectattr('entry.change_type.value', 'equalto', 'updated')|list|length }}</span>
+    <span style="color: #dc3545;">🗑️ Removed: {{ history_with_jobs|selectattr('entry.change_type.value', 'equalto', 'removed')|list|length }}</span>
+</div>
+
+<!-- Data Table -->
+<div class="data-table-container">
+    <table class="data-table" id="history-table">
         <thead>
             <tr>
-                <th>Time</th>
-                <th>Job Title</th>
-                <th>Location</th>
-                <th>Change Type</th>
+                <th onclick="sortTable(0)">Date & Time <span class="sort-icon">⇅</span></th>
+                <th onclick="sortTable(1)">Change <span class="sort-icon">⇅</span></th>
+                <th onclick="sortTable(2)">Job Title <span class="sort-icon">⇅</span></th>
+                <th onclick="sortTable(3)">Location <span class="sort-icon">⇅</span></th>
+                <th onclick="sortTable(4)">City <span class="sort-icon">⇅</span></th>
+                <th onclick="sortTable(5)">Type <span class="sort-icon">⇅</span></th>
+                <th onclick="sortTable(6)">Hours/Week <span class="sort-icon">⇅</span></th>
+                <th onclick="sortTable(7)">Distance <span class="sort-icon">⇅</span></th>
+                <th onclick="sortTable(8)">Job ID <span class="sort-icon">⇅</span></th>
             </tr>
         </thead>
         <tbody>
@@ -21,16 +343,51 @@
             {% set job = item.job %}
             <tr>
                 <td>{{ entry.timestamp.strftime('%d/%m/%Y %H:%M:%S') if entry.timestamp else 'Unknown' }}</td>
-                <td>{{ job.job_title if job else 'Unknown' }}</td>
-                <td>{{ job.location_name or job.city if job else 'Unknown' }}</td>
                 <td>
                     {% if entry.change_type.value == 'new' %}
-                    <span style="color: #28a745; font-weight: 500;">NEW</span>
+                    <span class="badge badge-new">🆕 NEW</span>
                     {% elif entry.change_type.value == 'updated' %}
-                    <span style="color: #ffc107; font-weight: 500;">UPDATED</span>
+                    <span class="badge badge-updated">🔄 UPDATED</span>
                     {% elif entry.change_type.value == 'removed' %}
-                    <span style="color: #dc3545; font-weight: 500;">REMOVED</span>
+                    <span class="badge badge-removed">🗑️ REMOVED</span>
                     {% endif %}
+                </td>
+                <td>
+                    <div class="job-title" title="{{ job.job_title if job else 'Unknown' }}">
+                        {{ job.job_title if job else 'Unknown' }}
+                    </div>
+                </td>
+                <td>{{ job.location_name if job else 'Unknown' }}</td>
+                <td>{{ job.city if job else '-' }}</td>
+                <td>
+                    {% if job %}
+                        {% if 'part' in job.job_type.lower() %}
+                        <span style="color: #17a2b8;">Part-Time</span>
+                        {% elif 'full' in job.job_type.lower() %}
+                        <span style="color: #28a745;">Full-Time</span>
+                        {% else %}
+                        {{ job.job_type or '-' }}
+                        {% endif %}
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+                <td>
+                    {% if job and job.hours_per_week %}
+                    <span class="hours-badge">{{ job.hours_per_week }}h/week</span>
+                    {% else %}
+                    -
+                    {% endif %}
+                </td>
+                <td>
+                    {% if job and job.distance %}
+                    {{ '%.1f'|format(job.distance) }} miles
+                    {% else %}
+                    -
+                    {% endif %}
+                </td>
+                <td>
+                    <code style="font-size: 11px; color: #666;">{{ entry.job_id }}</code>
                 </td>
             </tr>
             {% endfor %}
@@ -38,7 +395,90 @@
     </table>
     
     {% if not history_with_jobs %}
-    <p style="text-align: center; padding: 40px; color: #666;">No history entries yet.</p>
+    <div class="no-results">
+        <h3>🤔 No history entries found</h3>
+        <p>Try adjusting your filters or wait for the monitor to detect job changes.</p>
+    </div>
     {% endif %}
 </div>
+
+<script>
+    let sortDirection = {};
+    
+    function sortTable(columnIndex) {
+        const table = document.getElementById('history-table');
+        const tbody = table.querySelector('tbody');
+        const rows = Array.from(tbody.querySelectorAll('tr'));
+        
+        // Toggle sort direction
+        sortDirection[columnIndex] = !sortDirection[columnIndex];
+        const isAsc = sortDirection[columnIndex];
+        
+        // Update header classes
+        table.querySelectorAll('th').forEach((th, idx) => {
+            th.classList.remove('sort-asc', 'sort-desc');
+            if (idx === columnIndex) {
+                th.classList.add(isAsc ? 'sort-asc' : 'sort-desc');
+            }
+        });
+        
+        // Sort rows
+        rows.sort((a, b) => {
+            const aVal = a.cells[columnIndex].textContent.trim();
+            const bVal = b.cells[columnIndex].textContent.trim();
+            
+            // Try to parse as number
+            const aNum = parseFloat(aVal);
+            const bNum = parseFloat(bVal);
+            
+            if (!isNaN(aNum) && !isNaN(bNum)) {
+                return isAsc ? aNum - bNum : bNum - aNum;
+            }
+            
+            // String comparison
+            return isAsc ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal);
+        });
+        
+        // Re-append sorted rows
+        rows.forEach(row => tbody.appendChild(row));
+    }
+    
+    function exportToCSV() {
+        const table = document.getElementById('history-table');
+        const rows = table.querySelectorAll('tr');
+        let csv = [];
+        
+        // Headers
+        const headers = [];
+        table.querySelectorAll('thead th').forEach(th => {
+            headers.push(th.textContent.replace('⇅', '').trim());
+        });
+        csv.push(headers.join(','));
+        
+        // Data rows
+        table.querySelectorAll('tbody tr').forEach(row => {
+            const rowData = [];
+            row.querySelectorAll('td').forEach(cell => {
+                let text = cell.textContent.trim().replace(/,/g, ';');
+                rowData.push('"' + text + '"');
+            });
+            csv.push(rowData.join(','));
+        });
+        
+        // Download
+        const csvContent = csv.join('\n');
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'job_history_' + new Date().toISOString().split('T')[0] + '.csv';
+        link.click();
+    }
+    
+    // Auto-submit on filter change (optional - remove if you prefer manual apply)
+    document.querySelectorAll('#change_type, #job_type').forEach(select => {
+        select.addEventListener('change', () => {
+            document.getElementById('filter-form').submit();
+        });
+    });
+</script>
 {% endblock %}
