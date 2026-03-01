@@ -133,3 +133,35 @@ sqlite3.OperationalError: no such table: jobs
 2026-02-28 12:43:39,595 - INFO - 127.0.0.1 - - [28/Feb/2026 12:43:39] "GET /history HTTP/1.1" 200 -
 2026-02-28 13:20:02,685 - INFO - 127.0.0.1 - - [28/Feb/2026 13:20:02] "GET /history HTTP/1.1" 200 -
 2026-02-28 13:38:44,521 - INFO - 127.0.0.1 - - [28/Feb/2026 13:38:44] "GET /history HTTP/1.1" 200 -
+2026-02-28 13:47:07,952 - INFO - 127.0.0.1 - - [28/Feb/2026 13:47:07] "GET /history HTTP/1.1" 200 -
+2026-02-28 13:48:14,200 - INFO - 127.0.0.1 - - [28/Feb/2026 13:48:14] "GET /history HTTP/1.1" 200 -
+2026-02-28 13:49:01,940 - INFO - 127.0.0.1 - - [28/Feb/2026 13:49:01] "GET /history HTTP/1.1" 200 -
+2026-02-28 23:23:29,125 - INFO - 127.0.0.1 - - [28/Feb/2026 23:23:29] "GET /history HTTP/1.1" 200 -
+2026-02-28 23:23:48,462 - INFO - 127.0.0.1 - - [28/Feb/2026 23:23:48] "GET /jobs?type=full-time HTTP/1.1" 200 -
+2026-02-28 23:23:57,102 - INFO - 127.0.0.1 - - [28/Feb/2026 23:23:57] "GET /jobs?type=part-time HTTP/1.1" 200 -
+2026-02-28 23:23:58,464 - INFO - 127.0.0.1 - - [28/Feb/2026 23:23:58] "GET /jobs?type=full-time HTTP/1.1" 200 -
+2026-02-28 23:24:00,990 - INFO - 127.0.0.1 - - [28/Feb/2026 23:24:00] "GET /jobs?type=flexible HTTP/1.1" 200 -
+2026-02-28 23:24:03,016 - INFO - 127.0.0.1 - - [28/Feb/2026 23:24:03] "GET /jobs?type=full-time HTTP/1.1" 200 -
+2026-02-28 23:24:15,482 - INFO - 127.0.0.1 - - [28/Feb/2026 23:24:15] "GET /history HTTP/1.1" 200 -
+2026-02-28 23:53:14,646 - INFO - Token loaded successfully
+2026-02-28 23:53:14,646 - INFO - Running in background thread (signal handling disabled)
+2026-02-28 23:53:14,646 - INFO - Starting monitor for Leeds, UK within 50.0 miles
+2026-02-28 23:53:15,209 - INFO - Geocoded Leeds, UK to 53.7946378, -1.5322079
+2026-02-28 23:53:15,662 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2026-02-28 23:53:15,662 - INFO - [33mPress CTRL+C to quit[0m
+2026-03-01 09:27:36,899 - INFO - 127.0.0.1 - - [01/Mar/2026 09:27:36] "GET /history HTTP/1.1" 200 -
+2026-03-01 10:30:03,599 - INFO - 127.0.0.1 - - [01/Mar/2026 10:30:03] "GET /history HTTP/1.1" 200 -
+2026-03-01 10:47:13,099 - INFO - 127.0.0.1 - - [01/Mar/2026 10:47:13] "GET /history HTTP/1.1" 200 -
+2026-03-01 10:47:15,701 - INFO - 127.0.0.1 - - [01/Mar/2026 10:47:15] "GET /history HTTP/1.1" 200 -
+2026-03-01 10:47:29,122 - INFO - 127.0.0.1 - - [01/Mar/2026 10:47:29] "GET /history HTTP/1.1" 200 -
+2026-03-01 10:48:09,159 - INFO - 127.0.0.1 - - [01/Mar/2026 10:48:09] "GET /jobs?type=full-time HTTP/1.1" 200 -
+2026-03-01 11:14:13,390 - INFO - Token loaded successfully
+2026-03-01 11:14:13,391 - INFO - Running in background thread (signal handling disabled)
+2026-03-01 11:14:13,391 - INFO - Starting monitor for Leeds, UK within 50.0 miles
+2026-03-01 11:14:13,674 - INFO - Geocoded Leeds, UK to 53.7946378, -1.5322079
+2026-03-01 11:14:14,407 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2026-03-01 11:14:14,408 - INFO - [33mPress CTRL+C to quit[0m
+2026-03-01 11:14:28,454 - INFO - 127.0.0.1 - - [01/Mar/2026 11:14:28] "GET / HTTP/1.1" 200 -
+2026-03-01 11:14:31,012 - INFO - 127.0.0.1 - - [01/Mar/2026 11:14:31] "GET /history HTTP/1.1" 200 -
