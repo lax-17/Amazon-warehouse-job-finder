@@ -43,7 +43,7 @@ def run_web():
     print("="*60)
     print(f"\n🌐 Web dashboard: http://{host}:{port}")
     print("📊 The monitor is running in background")
-    print("🔄 Fetching new jobs every 30 seconds")
+    print("🔄 Fetching new jobs every 10 seconds")
     print("\nPress Ctrl+C to stop both web server and monitor")
     print("="*60 + "\n")
     

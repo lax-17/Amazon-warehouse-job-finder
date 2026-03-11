@@ -37,7 +37,13 @@
                     <span class="badge badge-full-time">Full-Time</span>
                     {% endif %}
                 </td>
-                <td>{{ "%.1f"|format(job.distance) }} mi</td>
+                <td>
+                    {% if job.distance %}
+                    {{ "%.1f"|format(job.distance) }} mi
+                    {% else %}
+                    -
+                    {% endif %}
+                </td>
                 <td>
                     {% if job.is_flexible %}
                     <span class="badge badge-flexible">Flexible</span>

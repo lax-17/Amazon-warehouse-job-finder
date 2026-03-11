@@ -5,6 +5,7 @@ import sys
 import os
 import threading
 import asyncio
+from datetime import datetime
 
 # Add parent directory to path for imports
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -32,7 +33,7 @@ def start_monitor_in_background(config: Config):
     if _monitor_thread is None or not _monitor_thread.is_alive():
         _monitor_thread = threading.Thread(target=run_monitor, daemon=True)
         _monitor_thread.start()
-        print("✓ Monitor started in background (fetching every 30s)")
+        print("✓ Monitor started in background (fetching every 10s)")
         import time
         time.sleep(1)  # Give monitor time to start
     else:
