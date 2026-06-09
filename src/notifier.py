@@ -5,14 +5,16 @@ import aiohttp
 from typing import Optional
 
 from .models import Job
+from .config import Config
 
 
 class TelegramNotifier:
     """Send Telegram notifications for new jobs."""
     
     def __init__(self, bot_token: Optional[str] = None, chat_id: Optional[str] = None):
-        self.bot_token = bot_token or os.getenv("TELEGRAM_BOT_TOKEN", "")
-        self.chat_id = chat_id or os.getenv("TELEGRAM_CHAT_ID", "")
+        cfg = Config()
+        self.bot_token = bot_token or getattr(cfg, 'telegram_bot_token', '') or os.getenv("TELEGRAM_BOT_TOKEN", "")
+        self.chat_id = chat_id or getattr(cfg, 'telegram_chat_id', '') or os.getenv("TELEGRAM_CHAT_ID", "")
         self.enabled = bool(self.bot_token and self.chat_id)
     
     async def send_job_notification(self, job: Job) -> bool:
