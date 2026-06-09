@@ -39,6 +39,8 @@ class Job(BaseModel):
     employment_type: Optional[str] = Field("", alias="employmentType")
     job_type: Optional[str] = Field("", alias="jobType")
     distance: Optional[float] = 0.0
+    site_code: Optional[str] = ""
+    site_name: Optional[str] = ""
     
     # Computed fields
     is_flexible: bool = False
@@ -82,6 +84,8 @@ class Job(BaseModel):
             "employment_type": self.employment_type,
             "job_type": self.job_type,
             "distance": self.distance,
+            "site_code": self.site_code or "",
+            "site_name": self.site_name or "",
             "is_flexible": self.is_flexible,
             "is_under_20h": self.is_under_20h,
             "hours_per_week": self.hours_per_week,

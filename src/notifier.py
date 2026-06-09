@@ -25,12 +25,13 @@ class TelegramNotifier:
         hours_info = f"\n⏰ Hours: {job.hours_per_week}/week" if job.hours_per_week else ""
         distance_str = f"{job.distance:.1f}" if job.distance is not None else "N/A"
         
+        site_info = f"\n🏭 Site: {job.site_code}" if job.site_code else ""
         message = f"""🆕 <b>New Job Alert!</b>
 
 📋 <b>{job.job_title}</b>
 📍 Location: {location}
 💼 Type: {job.employment_type or 'N/A'}{hours_info}
-🚗 Distance: {distance_str} miles
+🚗 Distance: {distance_str} miles{site_info}
 
 {'✅ Flexible hours' if job.is_flexible else ''}
 {'⏱️ Under 20h/week' if job.is_under_20h else ''}

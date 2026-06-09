@@ -201,9 +201,30 @@ class JobMonitor:
                                 seen_ids.add(job.job_id)
                                 all_jobs.append(job)
                     
-                    # Create combined result for downstream use
+                    # Merge across locations with strict dedupe
+                    merged = []
+                    seen_ids = set()
+                    for job in all_jobs:
+                        if job.job_id in seen_ids:
+                            continue
+                        seen_ids.add(job.job_id)
+                        merged.append(job)
+
+                    # Apply site mapping by postcode prefix
+                    site_map = {}
+                    if hasattr(self.config, 'get_site_map'):
+                        site_map = self.config.get_site_map() or {}
+                    if site_map:
+                        for job in merged:
+                            postcode = (job.postal_code or '').replace(' ', '').upper()
+                            for prefix, code in site_map.items():
+                                if postcode.startswith(prefix.replace(' ', '').upper()):
+                                    job.site_code = code
+                                    job.site_name = code
+                                    break
+
                     from .models import JobSearchResult
-                    result = JobSearchResult(jobs=all_jobs, total_count=len(all_jobs), next_token=None)
+                    result = JobSearchResult(jobs=merged, total_count=len(merged), next_token=None)
                     
                     # Detect and record changes (now async for Telegram notifications)
                     changes = await self.change_detector.detect_changes(result.jobs)
@@ -225,7 +246,8 @@ class JobMonitor:
                                 job_type_str += " [UNDER-20H]"
                             print(f"  {i}. {job.job_title}")
                             print(f"     Location: {location_str}{job_type_str}")
-                            print(f"     Type: {job.employment_type or 'N/A'} | Distance: {job.distance or 0:.1f} mi")
+                            site_display = f" | Site: {job.site_code}" if job.site_code else ""
+                            print(f"     Type: {job.employment_type or 'N/A'} | Distance: {job.distance or 0:.1f} mi{site_display}")
                             print()
                         if len(active_jobs) > 10:
                             print(f"  ... and {len(active_jobs) - 10} more jobs")

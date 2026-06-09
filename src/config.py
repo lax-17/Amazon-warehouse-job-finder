@@ -57,6 +57,9 @@ class Config:
     telegram_bot_token: str = ""
     telegram_chat_id: str = ""
     
+    # Site mapping: postcode -> site code/name
+    site_postcode_map: str = ""
+    
     def __post_init__(self):
         """Load configuration from environment variables."""
         self.amazon_jobs_token = os.getenv("AMAZON_JOBS_TOKEN", self.amazon_jobs_token)
@@ -95,11 +98,25 @@ class Config:
         
         self.telegram_bot_token = os.getenv("TELEGRAM_BOT_TOKEN", self.telegram_bot_token)
         self.telegram_chat_id = os.getenv("TELEGRAM_CHAT_ID", self.telegram_chat_id)
+        self.site_postcode_map = os.getenv("SITE_POSTCODE_MAP", self.site_postcode_map)
         
         # Ensure data directory exists
         Path(self.database_path).parent.mkdir(parents=True, exist_ok=True)
         Path(self.log_file).parent.mkdir(parents=True, exist_ok=True)
     
+    def get_site_map(self) -> dict:
+        """Parse SITE_POSTCODE_MAP like DLS4:LS10, LBA5:BD18"""
+        mapping = {}
+        if not self.site_postcode_map:
+            return mapping
+        for item in self.site_postcode_map.split(","):
+            item = item.strip()
+            if not item or ":" not in item:
+                continue
+            code, postcode = item.split(":", 1)
+            mapping[postcode.strip().upper()] = code.strip()
+        return mapping
+
     def update_env_value(self, key: str, value: str) -> None:
         """Update a value in the config.env file."""
         config_path = Path(__file__).parent.parent / "config.env"

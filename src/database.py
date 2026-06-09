@@ -33,6 +33,8 @@ class Database:
                     employment_type TEXT,
                     job_type TEXT,
                     distance REAL,
+                    site_code TEXT DEFAULT '',
+                    site_name TEXT DEFAULT '',
                     is_flexible INTEGER DEFAULT 0,
                     is_under_20h INTEGER DEFAULT 0,
                     hours_per_week INTEGER,
@@ -43,6 +45,12 @@ class Database:
                     raw_data TEXT
                 )
             """)
+            
+            for col in ["site_code TEXT DEFAULT ''", "site_name TEXT DEFAULT ''"]:
+                try:
+                    conn.execute(f"ALTER TABLE jobs ADD COLUMN {col}")
+                except Exception:
+                    pass
             
             # Job history table
             conn.execute("""
@@ -79,9 +87,9 @@ class Database:
             conn.execute("""
                 INSERT OR REPLACE INTO jobs (
                     job_id, job_title, location_name, city, state, postal_code,
-                    employment_type, job_type, distance, is_flexible, is_under_20h,
+                    employment_type, job_type, distance, site_code, site_name, is_flexible, is_under_20h,
                     hours_per_week, status, first_seen, last_seen, last_updated, raw_data
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """, (
                 job.job_id,
                 job.job_title,
@@ -92,6 +100,8 @@ class Database:
                 job.employment_type or "",
                 job.job_type or "",
                 job.distance or 0.0,
+                job.site_code or "",
+                job.site_name or "",
                 1 if job.is_flexible else 0,
                 1 if job.is_under_20h else 0,
                 job.hours_per_week,
