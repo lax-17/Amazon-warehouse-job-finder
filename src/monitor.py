@@ -4,6 +4,8 @@ import asyncio
 import logging
 import signal
 import sys
+import os
+import fcntl
 from datetime import datetime
 from typing import Optional
 
@@ -16,6 +18,37 @@ from .fetcher import JobFetcher
 from .geocoder import Geocoder
 from .change_detector import ChangeDetector
 from .models import JobSearchResult
+
+LOCK_FILE = "/tmp/amazon_jobs_monitor.lock"
+
+
+class SingleInstance:
+    """Prevent multiple monitor instances from running simultaneously."""
+    
+    def __init__(self, lock_file: str):
+        self.lock_file = lock_file
+        self.fd = None
+    
+    def acquire(self) -> bool:
+        try:
+            self.fd = open(self.lock_file, "w")
+            fcntl.lockf(self.fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
+            self.fd.write(str(os.getpid()))
+            self.fd.flush()
+            return True
+        except (IOError, OSError):
+            if self.fd:
+                self.fd.close()
+            return False
+    
+    def release(self):
+        if self.fd:
+            try:
+                fcntl.lockf(self.fd, fcntl.LOCK_UN)
+                self.fd.close()
+                os.unlink(self.lock_file)
+            except OSError:
+                pass
 
 
 class JobMonitor:
@@ -58,6 +91,21 @@ class JobMonitor:
     async def run(self):
         """Run the monitoring loop."""
         self.running = True
+        single = SingleInstance(LOCK_FILE)
+        if not single.acquire():
+            self.logger.error("Another monitor instance is already running. Exiting.")
+            print("\n⚠️  Another monitor is already running. Stop it first.")
+            sys.exit(1)
+        
+        telegram = None
+        try:
+            from .notifier import TelegramNotifier
+            from .models import Job
+            telegram = TelegramNotifier()
+            if telegram.enabled:
+                self.logger.info("Telegram notifier enabled")
+        except Exception as e:
+            self.logger.warning(f"Telegram notifier unavailable: {e}")
         
         # Setup signal handlers for asyncio (only in main thread)
         import threading
@@ -74,27 +122,42 @@ class JobMonitor:
             # Running in a thread - signals not available, use a different approach
             self.logger.info("Running in background thread (signal handling disabled)")
         
-        # Get search parameters
-        location = self.config.default_location
+        # Ask user for poll interval at startup
+        try:
+            user_interval = input(f"Enter poll interval in seconds (current: {self.config.poll_interval_seconds}): ").strip()
+            if user_interval:
+                self.config.poll_interval_seconds = float(user_interval)
+            print(f"Using poll interval: {self.config.poll_interval_seconds} seconds")
+        except (EOFError, KeyboardInterrupt):
+            print(f"Using default poll interval: {self.config.poll_interval_seconds} seconds")
+
+        # Get search parameters - support multiple semicolon-separated locations
+        location_str = self.config.default_location
         radius = self.config.default_radius_miles
+        locations = [loc.strip() for loc in location_str.split(';') if loc.strip()]
         
-        self.logger.info(f"Starting monitor for {location} within {radius} miles")
+        self.logger.info(f"Starting monitor for {len(locations)} locations within {radius} miles")
         
-        # Geocode location
-        coords = await self.geocoder.geocode(location)
-        if not coords:
-            self.logger.error(f"Could not geocode location: {location}")
+        # Geocode all locations
+        location_coords = []
+        for loc in locations:
+            coords = await self.geocoder.geocode(loc)
+            if coords:
+                location_coords.append((loc, coords[0], coords[1]))
+                self.logger.info(f"Geocoded {loc} to {coords[0]}, {coords[1]}")
+            else:
+                self.logger.warning(f"Could not geocode location: {loc}")
+        
+        if not location_coords:
+            self.logger.error("No valid locations could be geocoded")
             return
-        
-        lat, lng = coords
-        self.logger.info(f"Geocoded {location} to {lat}, {lng}")
         
         # Create fetcher
         fetcher = JobFetcher(self.config.amazon_api_url, self.token)
         
         print(f"\n{'='*60}")
         print(f"Amazon Jobs Monitor v2")
-        print(f"Location: {location}")
+        print(f"Locations: {', '.join(locations)}")
         print(f"Radius: {radius} miles")
         print(f"Polling every {self.config.poll_interval_seconds}s")
         print(f"{'='*60}\n")
@@ -106,16 +169,27 @@ class JobMonitor:
                 self.cycle_count += 1
                 
                 try:
-                    # Fetch jobs
-                    result = await fetcher.fetch_jobs(
-                        session, lat, lng, radius, paginate=False
-                    )
+                    # Fetch jobs from all locations and merge (dedupe by jobId)
+                    all_jobs = []
+                    seen_ids = set()
+                    for loc_name, lat, lng in location_coords:
+                        result = await fetcher.fetch_jobs(
+                            session, lat, lng, radius, paginate=False
+                        )
+                        for job in result.jobs:
+                            if job.job_id not in seen_ids:
+                                seen_ids.add(job.job_id)
+                                all_jobs.append(job)
+                    
+                    # Create combined result for downstream use
+                    from .models import JobSearchResult
+                    result = JobSearchResult(jobs=all_jobs, total_count=len(all_jobs), next_token=None)
                     
                     # Detect and record changes (now async for Telegram notifications)
                     changes = await self.change_detector.detect_changes(result.jobs)
                     
                     # Log status
-                    await self._log_status(result, changes, location, radius)
+                    await self._log_status(result, changes, ', '.join(locations), radius)
                     
                     # Display all active jobs with full details
                     active_jobs = [j for j in result.jobs]
@@ -158,6 +232,7 @@ class JobMonitor:
                                 print(f"     - {job.job_title} at {loc}")
                         print()
                     
+
                 except Exception as e:
                     self.logger.error(f"Error in cycle {self.cycle_count}: {e}")
                 
@@ -171,7 +246,7 @@ class JobMonitor:
         
         self.logger.info(f"Monitor stopped after {self.cycle_count} cycles")
     
-    async def _log_status(self, result: JobSearchResult, changes, location: str, radius: float):
+    async def _log_status(self, result, changes, location: str, radius: float):
         """Log current status with London timezone."""
         london_tz = pytz.timezone('Europe/London')
         local_time = datetime.now(london_tz)

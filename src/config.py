@@ -33,7 +33,7 @@ class Config:
     max_historical_days: int = 30
     
     # Search Defaults
-    default_location: str = "Leeds, UK"
+    default_location: str = "Leeds, UK; London, UK; Manchester, UK"
     default_radius_miles: float = 50.0
     default_job_type: str = "part-time"
     
