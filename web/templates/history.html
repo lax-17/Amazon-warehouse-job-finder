@@ -334,7 +334,8 @@
                 <th onclick="sortTable(5)">Type <span class="sort-icon">⇅</span></th>
                 <th onclick="sortTable(6)">Hours/Week <span class="sort-icon">⇅</span></th>
                 <th onclick="sortTable(7)">Distance <span class="sort-icon">⇅</span></th>
-                <th onclick="sortTable(8)">Job ID <span class="sort-icon">⇅</span></th>
+                <th onclick="sortTable(8)">Site <span class="sort-icon">⇅</span></th>
+                <th onclick="sortTable(9)">Job ID <span class="sort-icon">⇅</span></th>
             </tr>
         </thead>
         <tbody>
@@ -359,6 +360,7 @@
                 </td>
                 <td>{{ job.location_name if job else 'Unknown' }}</td>
                 <td>{{ job.city if job else '-' }}</td>
+                <td>{{ job.site_code if job and job.site_code else '-' }}</td>
                 <td>
                     {% if job %}
                         {% if 'part' in job.job_type.lower() %}

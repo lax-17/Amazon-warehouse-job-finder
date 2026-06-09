@@ -14,6 +14,7 @@
                 <th>Hours/Week</th>
                 <th>Type</th>
                 <th>Distance</th>
+                <th>Site</th>
                 <th>Flags</th>
                 <th>First Seen</th>
             </tr>
@@ -23,6 +24,7 @@
             <tr>
                 <td>{{ job.job_title }}</td>
                 <td>{{ job.location_name }}</td>
+                <td>{{ job.site_code or '-' }}</td>
                 <td>
                     {% if job.hours_per_week %}
                     {{ job.hours_per_week }} hrs

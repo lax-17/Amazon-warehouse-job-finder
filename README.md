@@ -9,6 +9,10 @@ Monitor UK Amazon warehouse jobs from the public jobs API, with alerts to Telegr
 - Optional: maps postcode prefixes to known Amazon site codes (`DLS4`, `LBA5`, `MAN1`, etc.) via `SITE_POSTCODE_MAP`.
 - Interactive startup prompts for locations and poll interval.
 
+## Preview
+![Dashboard](docs/history%20dashboard.png)
+![Telegram Notification](docs/Telegram.png)
+
 ## Setup
 1. Install dependencies:
 ```bash
