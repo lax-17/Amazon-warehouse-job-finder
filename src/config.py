@@ -29,11 +29,11 @@ class Config:
     database_path: str = "data/jobs.db"
     
     # Monitoring Settings
-    poll_interval_seconds: float = 60.0
+    poll_interval_seconds: float = 10.0
     max_historical_days: int = 30
     
     # Search Defaults
-    default_location: str = "Leeds, UK; London, UK; Manchester, UK"
+    default_location: str = "Leeds, UK"
     default_radius_miles: float = 50.0
     default_job_type: str = "part-time"
     
@@ -99,6 +99,29 @@ class Config:
         # Ensure data directory exists
         Path(self.database_path).parent.mkdir(parents=True, exist_ok=True)
         Path(self.log_file).parent.mkdir(parents=True, exist_ok=True)
+    
+    def update_env_value(self, key: str, value: str) -> None:
+        """Update a value in the config.env file."""
+        config_path = Path(__file__).parent.parent / "config.env"
+        if not config_path.exists():
+            return
+        
+        lines = []
+        with open(config_path, 'r') as f:
+            lines = f.readlines()
+        
+        updated = False
+        for i, line in enumerate(lines):
+            if line.startswith(f"{key}="):
+                lines[i] = f"{key}={value}\n"
+                updated = True
+                break
+        
+        if not updated:
+            lines.append(f"{key}={value}\n")
+        
+        with open(config_path, 'w') as f:
+            f.writelines(lines)
     
     def get_token(self) -> str:
         """Get bearer token from various sources."""

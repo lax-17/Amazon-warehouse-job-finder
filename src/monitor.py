@@ -131,6 +131,26 @@ class JobMonitor:
         except (EOFError, KeyboardInterrupt):
             print(f"Using default poll interval: {self.config.poll_interval_seconds} seconds")
 
+        # Ask user for locations at startup
+        try:
+            user_locations = input(f"Enter locations separated by ';' (current: {self.config.default_location}): ").strip()
+            if user_locations:
+                normalized = []
+                for loc in user_locations.split(';'):
+                    loc = loc.strip()
+                    if loc and ',uk' not in loc.lower():
+                        loc = f"{loc}, UK"
+                    if loc:
+                        normalized.append(loc)
+                self.config.default_location = '; '.join(normalized)
+                try:
+                    self.config.update_env_value('DEFAULT_LOCATION', self.config.default_location)
+                except Exception:
+                    pass
+            print(f"Using locations: {self.config.default_location}")
+        except (EOFError, KeyboardInterrupt):
+            print(f"Using default locations: {self.config.default_location}")
+
         # Get search parameters - support multiple semicolon-separated locations
         location_str = self.config.default_location
         radius = self.config.default_radius_miles
