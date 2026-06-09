@@ -360,7 +360,6 @@
                 </td>
                 <td>{{ job.location_name if job else 'Unknown' }}</td>
                 <td>{{ job.city if job else '-' }}</td>
-                <td>{{ job.site_code if job and job.site_code else '-' }}</td>
                 <td>
                     {% if job %}
                         {% if 'part' in job.job_type.lower() %}
@@ -388,6 +387,7 @@
                     -
                     {% endif %}
                 </td>
+                <td>{{ job.site_code if job and job.site_code else '-' }}</td>
                 <td>
                     <code style="font-size: 11px; color: #666;">{{ entry.job_id }}</code>
                 </td>
